@@ -20,6 +20,7 @@ jobs:
         with:
           host: ${{ secrets.HOME_SERVER_HOSTNAME }}
           username: ${{ secrets.HOME_SERVER_USERNAME }}
+          strip_components: true
           key: ${{ secrets.HOME_SERVER_SSH_KEY }}
           source: "./dynamic_dns/cron_job"
           target: "/home/${{ secrets.HOME_SERVER_USERNAME }}/cron_job/"
