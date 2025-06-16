@@ -1,0 +1,48 @@
+name: Deploy Resume Tracker App
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "resume_tracker/**"
+      - ".github/workflows/deploy_resume_tracker.yml"
+
+jobs:
+  build_image:
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Add environment variables
+        run: |
+          echo "MAILGUN_API_KEY=${{ secrets.MAILGUN_API_KEY }}" > resume_tracker/.env
+          echo "MAILGUN_EMAIL=${{ secrets.MAILGUN_EMAIL }}" >> resume_tracker/.env
+          echo "IPINFO_API_KEY=${{ secrets.IPINFO_API_KEY }}" >> resume_tracker/.env
+      - name: Build and Push Image
+        run: |
+          cd resume_tracker
+          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
+          docker build -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/resume-tracker:latest .
+          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/resume-tracker:latest
+  deploy:
+    needs: build_image
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    steps:
+      - uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOME_SERVER_HOSTNAME }}
+          username: ${{ secrets.HOME_SERVER_USERNAME }}
+          key: ${{ secrets.HOME_SERVER_SSH_KEY }}
+          script: |
+            aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
+            docker pull ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/resume-tracker:latest
+            docker stop resume-tracker-container
+            docker rm resume-tracker-container
+            docker run -d -p 8000:8000 --name resume-tracker-container ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/resume-tracker:latest
