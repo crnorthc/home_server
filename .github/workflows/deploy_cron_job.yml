@@ -26,12 +26,11 @@ jobs:
           source: "./dynamic_dns/cron_job"
           target: "/home/${{ secrets.HOME_SERVER_USERNAME }}/"
           rm: true
-      - name: Set up SSH key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.REMOTE_SSH_KEY }}" > ~/.ssh/id_ecdsa
-          chmod 600 ~/.ssh/id_ecdsa
-          ssh-keyscan -H ${{ secrets.REMOTE_HOST }} >> ~/.ssh/known_hosts
       - name: Trigger setup
-        run: |
-          ssh ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} "sh ~/cron_job/setup.sh"
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOME_SERVER_HOSTNAME }}
+          username: ${{ secrets.HOME_SERVER_USERNAME }}
+          key: ${{ secrets.HOME_SERVER_SSH_KEY }}
+          script: |
+            ssh ${{ secrets.HOME_SERVER_USERNAME }}@${{ secrets.HOME_SERVER_HOSTNAME }} "sh ~/cron_job/setup.sh"
