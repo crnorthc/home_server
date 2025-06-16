@@ -32,7 +32,7 @@ jobs:
           file: ./resume_tracker/Dockerfile
           tags: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/resume-tracker:latest
           load: true
-      - name: Build and Push Image
+      - name: Push Image to ECR
         run: |
           aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
           docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/resume-tracker:latest

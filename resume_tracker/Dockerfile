@@ -1,5 +1,15 @@
 FROM python:3.13-rc-bookworm
 
+# Work around for building image for arm64
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libffi-dev \
+    libssl-dev \
+    libuv1-dev \
+    python3-dev \
+    cargo \
+ && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 COPY ./requirements.txt /app/requirements.txt
 
