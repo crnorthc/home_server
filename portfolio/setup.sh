@@ -1,6 +1,5 @@
 #!/bin/bash
 
 export PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
-USER_NAME=$(whoami)
 
-cp -r /home/$USER_NAME/dist/* /var/www/html
+sudo cp -r /home/$SUDO_USER/dist/* /var/www/html
