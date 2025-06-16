@@ -12,10 +12,6 @@ RUN pip install -r requirements.txt
 COPY ./main.py /app/main.py
 COPY ./.env /app/.env
 
-# Custom script that starts cron and then your application
-COPY start.sh /start.sh
-RUN chmod +x /start.sh
-
 # Expose the port the app runs on
 EXPOSE 8000
 
