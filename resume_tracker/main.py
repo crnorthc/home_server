@@ -12,13 +12,14 @@ load_dotenv()
 
 @app.get("/resume")
 def record_and_redirect(request: Request, id: str):
-    client_host = request.client.host
+    ip = request.headers.get("x-forwarded-for", request.client.host)
+    ip = ip.split(",")[0].strip()
 
     extra_message = "No Ip Address."
-    if client_host:
-        extra_message = f"Ip address: {client_host}"
+    if ip:
+        extra_message = f"Ip address: {ip}"
         ip_info_response = requests.get(
-            f"https://ipinfo.io/{client_host}/json?token={os.environ.get("IPINFO_API_KEY")}",
+            f"https://ipinfo.io/{ip}/json?token={os.environ.get('IPINFO_API_KEY')}",
             timeout=15,
         )
 
@@ -35,10 +36,10 @@ def record_and_redirect(request: Request, id: str):
             )
 
     requests.post(
-        f"https://api.mailgun.net/v3/{os.environ.get("MAILGUN_EMAIL")}/messages",
+        f"https://api.mailgun.net/v3/{os.environ.get('MAILGUN_EMAIL')}/messages",
         auth=("api", os.environ.get("MAILGUN_API_KEY", "API_KEY")),
         data={
-            "from": f"Resume Tracker <postmaster@{os.environ.get("MAILGUN_EMAIL")}>",
+            "from": f"Resume Tracker <postmaster@{os.environ.get('MAILGUN_EMAIL')}>",
             "to": "Caleb Northcott <crnorthc99@gmail.com>",
             "subject": "New Resume View",
             "text": f"New resume view for {id}.\n{extra_message}",
