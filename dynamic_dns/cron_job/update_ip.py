@@ -40,3 +40,5 @@ if __name__ == "__main__":
     if current_ip != previous_ip:
         write_ip(current_ip)
         submit_new_ip(current_ip)
+
+# Hello
