@@ -6,6 +6,12 @@ This project powers a **home server running on a Raspberry Pi 4B** that maintain
 
 Using a custom built tool to customize resumes for a given job description, I attach a url to view the project. This url first hits the FastAPI app to log the link click and notify me via email, then redirects to my github to view the project.
 
+## 🧑🏽‍💻 Portfolio
+
+The Vite+React static portfolio website is built then served using nginx. You can check it out here https://calebnorthcott.com
+
+Using a custom built tool to customize resumes for a given job description, I attach a url to view the project. This url first hits the FastAPI app to log the link click and notify me via email, then redirects to my github to view the project.
+
 ## 🧠 Dynamic DNS Overview
 
 Since residential ISPs often change public IP addresses, this setup ensures a consistent domain can still be used to reach the Raspberry Pi. A background script monitors for IP changes and updates AWS Route 53 records via a serverless API endpoint.
