@@ -11,7 +11,7 @@ load_dotenv()
 
 
 @app.get("/resume")
-def read_root(request: Request, id: str):
+def record_and_redirect(request: Request, id: str):
     client_host = request.client.host
 
     extra_message = "No Ip Address."
