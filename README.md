@@ -4,13 +4,11 @@ This project powers a **home server running on a Raspberry Pi 4B** that maintain
 
 ## 📄 Resume Link Tracker
 
-Using a custom built tool to customize resumes for a given job description, I attach a url to view the project. This url first hits the FastAPI app to log the link click and notify me via email, then redirects to my github to view the project.
+Using a custom built tool, which uses LLMs to generate a resume for a given job description, I attach a url to view the project. This url first hits the FastAPI app to log the link click and notify me via email, then redirects to my github to view the project.
 
 ## 🧑🏽‍💻 Portfolio
 
 The Vite+React static portfolio website is built then served using nginx. You can check it out here https://calebnorthcott.com
-
-Using a custom built tool to customize resumes for a given job description, I attach a url to view the project. This url first hits the FastAPI app to log the link click and notify me via email, then redirects to my github to view the project.
 
 ## 🧠 Dynamic DNS Overview
 

@@ -47,4 +47,4 @@ def record_and_redirect(request: Request, id: str):
         timeout=15,
     )
 
-    return RedirectResponse("https://github.com/crnorthc")
+    return RedirectResponse("https://github.com/crnorthc/resumai")
