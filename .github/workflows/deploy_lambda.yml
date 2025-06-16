@@ -2,7 +2,7 @@ name: Deploy Dynamic DNS Lambda Function
 on:
   push:
     paths:
-      - "dynamic_dns/lambda.py"
+      - "dynamic_dns/lambda/**"
       - ".github/workflows/deploy_lambda.yml"
 
 jobs:

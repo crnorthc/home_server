@@ -1,8 +1,6 @@
 name: Deploy Resume Tracker App
 on:
   push:
-    branches:
-      - main
     paths:
       - "resume_tracker/**"
       - ".github/workflows/deploy_resume_tracker.yml"
