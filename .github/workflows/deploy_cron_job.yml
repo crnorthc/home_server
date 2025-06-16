@@ -11,8 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 2
       - name: Set env variables
         run: |
           echo "LAMBDA_API_KEY=${{ secrets.LAMBDA_API_KEY }}" > .env
@@ -24,7 +22,7 @@ jobs:
           username: ${{ secrets.HOME_SERVER_USERNAME }}
           key: ${{ secrets.HOME_SERVER_SSH_KEY }}
           source: "./dynamic_dns/cron_job"
-          target: "/home/${{ secrets.HOME_SERVER_USERNAME }}/"
+          target: "/home/${{ secrets.HOME_SERVER_USERNAME }}/cron_job/"
           rm: true
       - name: Trigger setup
         uses: appleboy/ssh-action@v1.0.3
@@ -33,4 +31,4 @@ jobs:
           username: ${{ secrets.HOME_SERVER_USERNAME }}
           key: ${{ secrets.HOME_SERVER_SSH_KEY }}
           script: |
-            ssh ${{ secrets.HOME_SERVER_USERNAME }}@${{ secrets.HOME_SERVER_HOSTNAME }} "sh ~/cron_job/setup.sh"
+            sh ~/cron_job/setup.sh
