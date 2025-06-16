@@ -29,13 +29,13 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install --target ./package -r dynamic_dns/lambda_requirements.txt
+          pip install --target ./package -r dynamic_dns/lambda/requirements.txt
 
       - name: Create deployment package
         run: |
           cd package
           zip -r ../my-deployment-package.zip .
-          cd ../dynamic_dns
+          cd ../dynamic_dns/lambda
           zip -g -r ../my-deployment-package.zip .
 
       - name: Deploy to AWS Lambda
