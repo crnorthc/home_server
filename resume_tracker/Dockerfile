@@ -10,7 +10,6 @@ RUN pip install -r requirements.txt
 
 # Copy the rest of the application
 COPY ./main.py /app/main.py
-COPY ./start.sh /app/start.sh
 COPY ./.env /app/.env
 
 # Custom script that starts cron and then your application
@@ -21,4 +20,4 @@ RUN chmod +x /start.sh
 EXPOSE 8000
 
 # Run the start script
-CMD ["/start.sh"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "2"]
