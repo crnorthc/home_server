@@ -1,4 +1,4 @@
-FROM --platform=linux/arm64 python:3.13-slim-bookworm
+FROM python:3.13-rc-bookworm
 
 WORKDIR /app
 COPY ./requirements.txt /app/requirements.txt
