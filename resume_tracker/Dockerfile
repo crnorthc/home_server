@@ -1,19 +1,9 @@
-FROM python:3.13-rc-bookworm
-
-# Work around for building image for arm64
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    libffi-dev \
-    libssl-dev \
-    libuv1-dev \
-    python3-dev \
-    cargo \
- && rm -rf /var/lib/apt/lists/*
+FROM python:3.11-bookworm
 
 WORKDIR /app
 COPY ./requirements.txt /app/requirements.txt
 
-RUN pip install -r requirements.txt
+RUN pip install --prefer-binary -r requirements.txt
 
 COPY ./main.py /app/main.py
 COPY ./.env /app/.env
