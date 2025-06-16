@@ -24,11 +24,17 @@ jobs:
           echo "MAILGUN_API_KEY=${{ secrets.MAILGUN_API_KEY }}" > resume_tracker/.env
           echo "MAILGUN_EMAIL=${{ secrets.MAILGUN_EMAIL }}" >> resume_tracker/.env
           echo "IPINFO_API_KEY=${{ secrets.IPINFO_API_KEY }}" >> resume_tracker/.env
+      - name: Build for ARM64 and load locally
+        uses: docker/build-push-action@v5
+        with:
+          platforms: linux/arm64
+          context: ./resume_tracker
+          file: ./resume_tracker/Dockerfile
+          tags: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/resume-tracker:latest
+          load: true
       - name: Build and Push Image
         run: |
-          cd resume_tracker
           aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
-          docker build -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/resume-tracker:latest .
           docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/resume-tracker:latest
   deploy:
     needs: build_image
