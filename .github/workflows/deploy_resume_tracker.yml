@@ -31,6 +31,7 @@ jobs:
           --platform linux/arm64 \
           --tag ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/resume-tracker:latest \
           --load \
+          --progress plain \
           ./resume_tracker
 
       - name: Push Image to ECR
