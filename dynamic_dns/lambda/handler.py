@@ -6,7 +6,6 @@ route53 = boto3.client("route53")
 
 HOSTED_ZONE_ID = os.environ["HOSTED_ZONE_ID"]
 HOME_SERVER_RECORD_NAME = os.environ["HOME_SERVER_RECORD_NAME"]
-RESUMEAI_SERVER_RECORD_NAME = os.environ["RESUMEAI_SERVER_RECORD_NAME"]
 API_KEY = os.environ["API_KEY"]
 
 
@@ -25,15 +24,6 @@ def lambda_handler(event, context):
                         "Action": "UPSERT",
                         "ResourceRecordSet": {
                             "Name": HOME_SERVER_RECORD_NAME,
-                            "Type": "A",
-                            "TTL": 300,
-                            "ResourceRecords": [{"Value": ip_address}],
-                        },
-                    },
-                    {
-                        "Action": "UPSERT",
-                        "ResourceRecordSet": {
-                            "Name": RESUMEAI_SERVER_RECORD_NAME,
                             "Type": "A",
                             "TTL": 300,
                             "ResourceRecords": [{"Value": ip_address}],
