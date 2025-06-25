@@ -16,7 +16,7 @@ Since residential ISPs often change public IP addresses, this setup ensures a co
 
 ### 🧩 How It Works
 
-1. A **Python script** runs on the Raspberry Pi 4B.
+1. A **Rust script** runs on the Raspberry Pi 4B.
 2. It periodically checks the current public IP (e.g. using `https://api.ipify.org`).
 3. If the IP has changed since the last check, the script:
    - Sends a `POST` request to an **AWS Lambda function**, exposed via **API Gateway**.
@@ -25,7 +25,7 @@ Since residential ISPs often change public IP addresses, this setup ensures a co
 ### 🌐 Components
 
 - **Raspberry Pi 4B** (running 24/7 at home - hopefully 🙏)
-- **Python script** for IP monitoring
+- **Rust script** for IP monitoring
 - **AWS Lambda** function with permission to update Route 53
 - **Custom domain** managed via AWS Route 53 (e.g., `dnsupdate.mydomain.com`)
 - **API Gateway** to expose the Lambda function securely

@@ -1,0 +1,5 @@
+{
+  "rust-analyzer.linkedProjects": [
+    "./dynamic_dns/cron_job_rs/Cargo.toml"
+  ]
+}

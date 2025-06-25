@@ -3,3 +3,4 @@ lambdavenv/
 **/.env
 **/__pycache__
 **/.DS_store
+dynamic_dns/cron_job_rs/target
