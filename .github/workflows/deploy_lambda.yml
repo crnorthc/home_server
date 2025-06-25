@@ -36,7 +36,7 @@ jobs:
           cd package
           zip -r ../my-deployment-package.zip .
           cd ../dynamic_dns/lambda
-          zip -g -r ../my-deployment-package.zip .
+          zip -g -r ../../../my-deployment-package.zip .
 
       - name: Deploy to AWS Lambda
         run: |
