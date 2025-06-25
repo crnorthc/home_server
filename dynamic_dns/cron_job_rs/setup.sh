@@ -1,5 +1,6 @@
 #!/bin/bash
 
+export PATH=$HOME/.cargo/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
 USER_NAME=$(whoami)
 
 cd /home/$USER_NAME/cron_job_rs
